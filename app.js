@@ -5,12 +5,9 @@ const logger       = require('morgan');
 const cors         = require('cors');
 
 const indexRouter   = require('./routes/index');
-const usersRouter   = require('./routes/users');
-const catwaysRoutes = require('./routes/catways');
-const reservationsRoutes = require('./routes/reservations');
 const mongodb       = require('./db/mongo');
 
-mongodb.initClientDbConnection();
+mongodb.initClientDBConnection();
 
 const app = express();
 
@@ -26,5 +23,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 
+app.use(function(req, res, next) {
+    res.status(404).json({name: 'API', version: '1.0', status: 404, message: 'not_found'});
+});
+
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
 
 module.exports = app;
