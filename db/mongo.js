@@ -8,7 +8,7 @@ const clientOptions = {
 exports.initClientDBConnection = async() => {
     try {
         // On se connecte à MongoDB en utilisant une variable d'environnement URL_MONGO
-        await mongoose.connect(process.env.dev.URL_MONGO, clientOptions)
+        await mongoose.connect(process.env.URL_MONGO, clientOptions)
         console.log('Connected');
     } catch(error) {
         console.log('error');
