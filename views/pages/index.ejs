@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <%- include('../partials/head'); %>
+</head>
+<body class="container">
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+    <main>
+        <div>
+            <h1>Bienvenue sur l'API</h1>
+            <div>
+                <h2>Port de plaisance RUSSELL</h2>
+                <p>Bienvenue sur notre API de gestion des réservations et des catways</p>
+            </div>
+            <div>
+                <form method="POST" action="http://localhost:3000/users/authenticate" enctype="multipart/form-data">
+                    <fieldset>
+                        <legend>Formulaire de connexion</legend>
+                        <label for="email">Email</label>
+                        <input type="text" name="email"><br><br>
+                        <label for="password"> Mot de passe</label>
+                        <input type="password" name="password"><br><br>
+    
+                        <input type="submit" value="Connexion" name="authenticate">
+                    </fieldset>
+                </form>
+            </div>           
+        </div>
+    </main>
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+</body>
+</html>

@@ -11,5 +11,11 @@ router.delete('/:id',private.checkJWT, service.delete);
 
 router.post('/authenticate', service.authenticate);
 
+router.get('/dashboard', async (req, res) => {
+  res.render('dashboard', {
+    title: 'Tableau de bord'
+  })
+});
+
 module.exports = router;
 

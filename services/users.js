@@ -6,10 +6,8 @@ const SECRET_KEY = process.env.SECRET_KEY
 
 exports.authenticate = async (req, res, next) => {
     const { email, password } = req.body;
-    
     try{
         let user = await User.findOne({ email: email }, '-__v -createdAt -updatedAt');
-
         if (user) {
             bcrypt.compare(password, user.password, function(err, response) {
                 if (err) {
@@ -17,7 +15,6 @@ exports.authenticate = async (req, res, next) => {
                 }
                 if (response) {
                     delete user._doc.password;
-
                     const expireIn = 24 * 60 * 60;
                     const token    = jwt.sign({
                         user: user
@@ -28,7 +25,7 @@ exports.authenticate = async (req, res, next) => {
                     });
 
                     res.header('Authorization', 'Bearer' + token);
-
+                    res.redirect('/users/dashboard');
                     return res.status(200).json('authenticate_succeed');
                 }
 
