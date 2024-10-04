@@ -1,16 +1,17 @@
 const mongoose = require('mongoose');
 
 const clientOptions = {
-    useNewUrlParser : true,
-    dbName          : 'capitainerie'
+    useNewUrlParser: true,
+    dbName         : 'capitainerie' 
 };
 
-exports.initClientDbConnection = async () => {
+exports.initClientDBConnection = async() => {
     try {
-        await mongoose.connect(process.env.URL_MONGO, clientOptions)
+        // On se connecte à MongoDB en utilisant une variable d'environnement URL_MONGO
+        await mongoose.connect(process.env.dev.URL_MONGO, clientOptions)
         console.log('Connected');
-    } catch (error) {
-        console.log(error);
+    } catch(error) {
+        console.log('error');
         throw error;
     }
 }

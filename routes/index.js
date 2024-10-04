@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
+const usersRoute = require('../routes/users');
+const { version } = require('mongoose');
+
 const userRoute   = require('../routes/users');
 const catwayRoute = require('../routes/catways');
 const reservationRoute = require('../routes/reservations');
