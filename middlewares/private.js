@@ -1,33 +1,31 @@
 const jwt = require('jsonwebtoken');
 const SECRET_KEY = process.env.SECRET_KEY;
 
-exports.checkJWT = async(req, res, next) => {
-    let token = req.headers['x-access-token'] || req.headers['authorization'];
-    if(!!token && token.startsWith('Bearer')) {
-        token = token.slice(7, token.length);
+const extractBearer = authorization => {
+
+    if(typeof authorization !== 'string') {
+        return false
     }
 
-    if(token) {
-        jwt.verify(token, SECRET_KEY, (err, decoded) => {
-            if(err) {
-                return res.status(401).json('token_not_valid');
-            } else {
-                req.decoded = decoded;
+    const matches = authorization.match(/(bearer)\s+(\S+)/i)
 
-                const expiresIn = 24 * 60 * 60;
-                const newToken = jwt.sign({
-                    user : decoded.user
-                },
-                SECRET_KEY,
-                {
-                    expiresIn: expiresIn
-                });
+    return matches && matches[2]
 
-                res.header('Authorization', 'Bearer' + newToken);
-                next()
-            }
-        });
-    } else {
+}
+
+exports.checkJWT = async(req, res, next) => {
+    const token = req.headers.authorization && extractBearer(req.headers.authorization)
+    
+    if(!token) {
         return res.status(401).json('token_required');
     }
-}
+
+    jwt.verify(token, SECRET_KEY, (err, decodedToken) => {
+        if(err) {
+            return res.status(401).json('token_not_valid');
+        }
+        
+            next()
+        })
+    }
+   
