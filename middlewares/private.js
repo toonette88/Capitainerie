@@ -18,7 +18,7 @@ exports.checkJWT = async(req, res, next) => {
     
     if(!token) {
         return res.status(401).json('token_required');
-    }
+    } else {
 
     jwt.verify(token, SECRET_KEY, (err, decodedToken) => {
         if(err) {
@@ -28,4 +28,4 @@ exports.checkJWT = async(req, res, next) => {
             next()
         })
     }
-   
+}
