@@ -1,20 +1,12 @@
 const Catway = require('../models/catway');
 
-exports.getAll = async(req, res, next) => {
-    try{
-        let catways = await Catways.find()
-
-        if(catways) {
-            return res.status(200).json(catways);
-        }
-
-        return res.status(404).json('catways_not_found');
-    } catch (error) {
-        return res.status(501).json(error)
-    }    
+exports.getAllCatways = async (req, res) => {
+    await Catway.find()
+        .then(catways => res.json({data : catways}))
+        .catch(err => res.status(500).json({message: 'Database Error', error: err}))
 }
 
-exports.getById = async(req, res, next) => {
+exports.getById = async (req, res) => {
     const id = req.params.id
 
     try{
