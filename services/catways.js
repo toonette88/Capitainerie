@@ -6,11 +6,17 @@ exports.getAllCatways = async (req, res) => {
         .catch(err => res.status(500).json({message: 'Database Error', error: err}))
 }
 
+exports.getAllCatwaysNumbers = async (req, res) => {
+    await Catway.distinct('catwayNumber',{})
+        .then(catways =>  res.json({data : catways}  ))
+        .catch(err => res.status(500).json({message: 'Database Error', error: err}))
+}
+
 exports.getById = async (req, res) => {
     const id = req.params.id
-
+    
     try{
-        let catway = await Catway.findById(id);
+        let catway = await Catway.findOne({_id: id});
 
         if (catway) {
             return res.status(200).json(catway);
@@ -22,7 +28,7 @@ exports.getById = async (req, res) => {
     }
 }
 
-exports.add = async (req, res, next) => {
+exports.add = async (req, res) => {
 
     const temp = ({
         catwayNumber: req.body.catwayNumber,
@@ -39,7 +45,7 @@ exports.add = async (req, res, next) => {
     }
 }
 
-exports.update = async (req, res, next) => {
+exports.update = async (req, res) => {
     const id = req.params.id
     const temp = ({
         catwayNumber: req.body.catwayNumber,
@@ -48,7 +54,7 @@ exports.update = async (req, res, next) => {
     });
 
     try {
-        let catway = await Catway.findOne({_id : id });
+        let catway = await Catway.findOne({catwayNumber : id });
 
         if (catway) {
             Object.keys(temp).forEach((key) => {
@@ -71,7 +77,7 @@ exports.delete = async (req, res, next) => {
     const id = req.params.id
 
     try {
-        await Catway.deleteOne({_id: id});
+        await Catway.deleteOne({id: id});
 
         return res.status(204).json('delete_ok');
     } catch (error) {

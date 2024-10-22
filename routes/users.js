@@ -4,10 +4,11 @@ const router  = express.Router();
 const service = require('../services/users');
 const private = require('../middlewares/private');
 
-router.get('/:id',private.checkJWT, service.getById);
+router.get('/', service.getAllUsers)
+router.get('/:id', service.getById);
 router.post('/add', service.add);
-router.put('/:id', private.checkJWT, service.update);
-router.delete('/:id',private.checkJWT, service.delete);
+router.put('/:id', service.update);
+router.delete('/:id', service.delete);
 
 router.post('/authenticate', service.authenticate);
 

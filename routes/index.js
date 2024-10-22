@@ -4,6 +4,7 @@ var router = express.Router();
 const userRoute   = require('../routes/users');
 const catwayRoute = require('../routes/catways');
 const reservationRoute = require('../routes/reservations');
+const private = require('../middlewares/private')
 
 router.get('/', async (req, res) => {
   res.status(200).json({
@@ -15,7 +16,7 @@ router.get('/', async (req, res) => {
 });
 
 router.use('/users', userRoute);
-router.use('/catways', catwayRoute);
-router.use('/reservations', reservationRoute);
+router.use('/catways',private.checkJWT, catwayRoute);
+router.use('/reservations',private.checkJWT, reservationRoute);
 
 module.exports = router;

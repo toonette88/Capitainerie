@@ -1,20 +1,12 @@
 const Reservation = require('../models/reservation');
 
-exports.getAll = async(req, res, next) => {
-    try{
-        let reservations = await Reservations.find()
-
-        if(reservations) {
-            return res.status(200).json(reservations);
-        }
-
-        return res.status(404).json('reservations_not_found');
-    } catch (error) {
-        return res.status(501).json(error)
-    }    
+exports.getAllReservations = async(req, res) => {
+    await Reservation.find()
+        .then(reservations => res.json({data : reservations}))
+        .catch(err => res.status(500).json({message: 'Database error, error: err'}))
 }
 
-exports.getById = async(req, res, next) => {
+exports.getById = async(req, res) => {
     const idReservation = req.params.id
 
     try{
@@ -53,7 +45,7 @@ exports.delete = async (req, res, next) => {
     const idReservation = req.params.id
 
     try {
-        await Reservation.deleteOne({_id: idReservation});
+        await Reservation.destroy({_id: idReservation});
 
         return res.status(204).json('delete_ok');
     } catch (error) {

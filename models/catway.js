@@ -2,13 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Catway = new Schema({
-    id: {
-        type: String,
-        unique: true
-    },
-    catwayNumber: {
+     catwayNumber: {
         type: Number,
-        trim: true,
         unique: true,
         required: [true, 'Le numéro de pont est requis']
     },

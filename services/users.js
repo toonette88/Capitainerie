@@ -42,12 +42,18 @@ exports.authenticate = async (req, res, next) => {
     }
 }
 
+exports.getAllUsers = async (req, res) => {
+    await User.find()
+        .then(users => res.json({data : users}))
+        .catch(err => res.status(500).json({message: 'Database Error', error: err}))
+}
 
-exports.getById = async(req, res, next) => {
+
+exports.getById = async(req, res) => {
     const id = req.params.id
 
     try{
-        let user = await User.findById(id);
+        let user = await User.findOne({_id: id});
 
         if (user) {
             return res.status(200).json(user);
@@ -59,7 +65,7 @@ exports.getById = async(req, res, next) => {
     }
 }
 
-exports.add = async (req, res, next) => {
+exports.add = async (req, res) => {
 
     const temp = ({
         name    : req.body.name,
@@ -76,7 +82,7 @@ exports.add = async (req, res, next) => {
     }
 }
 
-exports.update = async (req, res, next) => {
+exports.update = async (req, res) => {
     const id = req.params.id
     const temp = ({
         name    : req.body.name,
