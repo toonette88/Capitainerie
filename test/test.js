@@ -2,6 +2,7 @@ const assert = require('assert');
 const request = require('supertest');
 const app = require('../app');
 const jwt = require('jsonwebtoken');
+require('sinon-mongoose')
 
 const userService = require('../src/services/users');
 const catwayService = require('../src/services/catways');
