@@ -8,7 +8,7 @@ const Reservation = require('../models/reservation');
 exports.getAllReservations = async(req, res) => {
     await Reservation.find()
         .then(reservations => res.status(200).json({data : reservations}))
-        .catch(err => res.status(500).json({message: 'Database error, error: err'}))
+        .catch(err => res.status(500).json({message: 'Database error'}))
 }
 
 /**
