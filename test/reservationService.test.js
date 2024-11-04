@@ -17,27 +17,28 @@ describe('Reservation Service', () => {
         sinon.restore(); // Restore all stubs after each test
     });
 
-    describe('getAllReservations', () => {
-        it('should return all reservations', async () => {
-            const mockReservations = [{ catwayNumber: 1, clientName: 'John Doe' }];
-            sinon.stub(Reservation, 'find').resolves(mockReservations);
-
-            await reservationController.getAllReservations({}, res);
-
-            assert.strictEqual(res.status.calledWith(200), true);
-            assert.strictEqual(res.json.calledWith({ data: mockReservations }), true);
-        });
-
-        it('should handle database errors', async () => {
-            const mockError = new Error('Database error');
-            sinon.stub(Reservation, 'find').rejects(mockError);
-    
-            await reservationController.getAllReservations({}, res);
-    
-            assert.strictEqual(res.status.calledWith(500), true);
-            assert.ok(res.json.calledWithMatch({ message: 'Database error' })); // Corrigez ici
-        });
-    });
+      describe('getAllReservations', () => {
+            it('should return all reservations', async () => {
+              const mockReservations = [{ catwayNumber: 1, clientName: 'John Doe' }];
+              sinon.stub(Reservation, 'find').resolves(mockReservations);
+        
+              await reservationController.getAllReservations({}, res);
+        
+              assert.strictEqual(res.status.calledWith(200), true);
+              assert.strictEqual(res.json.calledWith({ data: mockReservations }), true);
+            });
+        
+            it('should handle database errors', async () => {
+              const mockError = new Error('Database error');
+              sinon.stub(Reservation, 'find').rejects(mockError);
+          
+              await reservationController.getAllReservations({}, res);
+          
+              assert.strictEqual(res.status.calledWith(500), true);
+              assert.ok(res.json.calledWithMatch({ message: 'Database error' })); // Corrigez ici
+            });
+          });
+        
 
     describe('getById', () => {
         it('should return a reservation by id', async () => {
