@@ -22,10 +22,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/docs', express.static(path.join(__dirname, 'docs')));
 
 app.use(function(req, res, next) {
     res.status(404).json({name: 'API', version: '1.0', status: 404, message: 'not_found'});
 });
+
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
